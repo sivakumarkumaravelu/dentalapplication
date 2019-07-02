@@ -1,6 +1,8 @@
 # Dental application using REST (Spring Boot + REST)
 Dental appointment application using Spring Boot + REST
 
+Data is saved in memory in Maps. Can be easily modified to accomodate DB.
+
 $ git clone https://github.com/sivakumarkumaravelu/dentalapplication.git
 
 $ cd dentalapplication
