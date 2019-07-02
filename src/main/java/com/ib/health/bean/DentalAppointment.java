@@ -56,4 +56,10 @@ public class DentalAppointment {
         DentalAppointment c = (DentalAppointment) o;
         return id == c.id && dentist_id == c.dentist_id && patient_id == c.patient_id && startTime == c.startTime && endTime == c.endTime;
     }
+
+    @Override
+    public String toString() {
+        return "Id: '" + this.id + "', Dentist Id: '" + this.dentist_id + "', Patient id: '" + this.patient_id + "'";
+    }
+
 }

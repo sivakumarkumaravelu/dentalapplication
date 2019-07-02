@@ -1,6 +1,9 @@
 package com.ib.health.validator;
 
 import com.ib.health.bean.DentalAppointment;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 import java.sql.Timestamp;
@@ -13,13 +16,18 @@ import java.util.stream.Collectors;
 
 @Component
 public class DentalAppointmentValidator {
+    private static final Logger logger = LoggerFactory.getLogger(DentalAppointmentValidator.class);
+
+    @Value( "${dental.appointment.minduration}" )
+    private int duration;
 
     public boolean validateDateInterval(long startTime, long endTime) {
         if (startTime <= 0 || endTime <= 0)
             return false;
         Timestamp fromTs = new Timestamp(startTime);
         Timestamp toTs = new Timestamp(endTime);
-        if (isValidFutureTimeStamp(fromTs) && isValidFutureTimeStamp(toTs) && isValidTimeDuration(fromTs, toTs, 30)) {
+        if (isValidFutureTimeStamp(fromTs) && isValidFutureTimeStamp(toTs) && isValidTimeDuration(fromTs, toTs, duration)) {
+            logger.debug("DentalAppointmentValidator.validateDateInterval(): Valid date interval");
             return true;
         }
         return false;
@@ -52,6 +60,7 @@ public class DentalAppointmentValidator {
         Timestamp toAppointment2 = new Timestamp(newAppointMent.getEndTime());
 
         if ((fromAppointment2.after(fromAppointment1) && fromAppointment2.before(toAppointment1)) || (toAppointment2.after(fromAppointment1) && toAppointment2.before(toAppointment1))) {
+            logger.info("DentalAppointmentValidator.isConflictingAppointment(): Conflicting appointment found");
             return false;
         }
         return true;
@@ -59,8 +68,10 @@ public class DentalAppointmentValidator {
 
 
     public boolean isValidDentistAppointment(DentalAppointment appointment, ConcurrentHashMap<Integer, DentalAppointment> allAppointments) {
-        if (allAppointments == null || allAppointments.isEmpty())
+        if (allAppointments == null || allAppointments.isEmpty()) {
+            logger.info("DentalAppointmentValidator.isValidDentistAppointment(): No new appointments yet, creating first appointment");
             return true;
+        }
         List<DentalAppointment> conflictingAppointments = allAppointments.values()
                 .stream()
                 .filter(map -> appointment.getDentist_id() == map.getDentist_id())
