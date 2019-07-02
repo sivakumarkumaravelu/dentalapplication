@@ -12,6 +12,10 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.atomic.AtomicInteger;
 
+/*
+Service class for Dental appointment
+ */
+
 @Component
 public class DentalAppointmentService {
 
