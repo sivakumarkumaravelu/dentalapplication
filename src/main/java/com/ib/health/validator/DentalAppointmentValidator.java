@@ -21,8 +21,7 @@ import java.util.stream.Collectors;
 public class DentalAppointmentValidator {
     private static final Logger logger = LoggerFactory.getLogger(DentalAppointmentValidator.class);
 
-    @Value( "${dental.appointment.minduration}" )
-    private int duration;
+    public static final int duration = 30;
 
     /**
      * Validates the date interval by accepting start and end time
