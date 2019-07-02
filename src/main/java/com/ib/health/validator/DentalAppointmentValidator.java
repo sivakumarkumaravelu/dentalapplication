@@ -25,7 +25,7 @@ public class DentalAppointmentValidator {
         return false;
     }
 
-    private boolean isValidFutureTimeStamp(Timestamp time) {
+    public boolean isValidFutureTimeStamp(Timestamp time) {
         boolean isValid = true;
         try {
             LocalDate today = LocalDate.now();
@@ -37,15 +37,14 @@ public class DentalAppointmentValidator {
         return isValid;
     }
 
-    private boolean isValidTimeDuration(Timestamp fromTs, Timestamp toTs, int minutes) {
+    public boolean isValidTimeDuration(Timestamp fromTs, Timestamp toTs, int minutes) {
         LocalDateTime fromLocalTime = fromTs.toLocalDateTime();
         LocalDateTime toLocalTime = toTs.toLocalDateTime();
         Duration duration = Duration.between(fromLocalTime, toLocalTime);
-        long diff = Math.abs(duration.toMinutes());
-        return diff >= minutes ? true : false;
+        return duration.toMinutes() >= minutes ? true : false;
     }
 
-    private boolean isConflictingAppointment(DentalAppointment reservedAppointment, DentalAppointment newAppointMent) {
+    public boolean isConflictingAppointment(DentalAppointment reservedAppointment, DentalAppointment newAppointMent) {
         Timestamp fromAppointment1 = new Timestamp(reservedAppointment.getStartTime());
         Timestamp toAppointment1 = new Timestamp(reservedAppointment.getEndTime());
 

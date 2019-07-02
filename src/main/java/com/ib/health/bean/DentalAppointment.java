@@ -17,19 +17,19 @@ public class DentalAppointment {
         this.endTime = endTime;
     }
 
-    public DentalAppointment(){
+    public DentalAppointment() {
     }
 
     public long getId() {
         return id;
     }
 
-    public int getDentist_id(){
+    public int getDentist_id() {
         return this.dentist_id;
     }
 
-    public int getPatient_id(){
-        return  this.patient_id;
+    public int getPatient_id() {
+        return this.patient_id;
     }
 
     public long getStartTime() {
@@ -42,6 +42,18 @@ public class DentalAppointment {
 
     @Override
     public int hashCode() {
-        return dentist_id + Long.hashCode(startTime) +  Long.hashCode(endTime);
+        return dentist_id + Long.hashCode(startTime) + Long.hashCode(endTime);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == this) {
+            return true;
+        }
+        if (!(o instanceof DentalAppointment)) {
+            return false;
+        }
+        DentalAppointment c = (DentalAppointment) o;
+        return id == c.id && dentist_id == c.dentist_id && patient_id == c.patient_id && startTime == c.startTime && endTime == c.endTime;
     }
 }

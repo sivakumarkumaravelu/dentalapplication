@@ -15,8 +15,8 @@ public class DentalAppointmentService {
 
     @Autowired
     DentalAppointmentValidator validator;
-    private ConcurrentHashMap<Integer, DentalAppointment> map = new ConcurrentHashMap<>();
-    private final AtomicInteger id = new AtomicInteger();
+    protected ConcurrentHashMap<Integer, DentalAppointment> map = new ConcurrentHashMap<>();
+    protected final AtomicInteger id = new AtomicInteger();
 
 
     public DentalAppointment getDentalAppointmentById(int id) {
