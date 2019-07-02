@@ -33,7 +33,7 @@ public class DentalAppointmentService {
             logger.info("DentalAppointment.getDentalAppointmentById(): DentalAppointmentById not found with id: " + id);
             throw new AppointmentNotFoundException(id);
         }
-        return map.get(id);
+        return appointment;
     }
 
     public DentalAppointment createDentalAppointment(DentalAppointment appointment) {
