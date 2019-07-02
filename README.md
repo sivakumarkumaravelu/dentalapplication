@@ -2,6 +2,7 @@
 Dental appointment application using Spring Boot + REST
 
 git clone https://github.com/sivakumarkumaravelu/dentalapplication.git
+
 mvn spring-boot:run
 
 # POST Requests
