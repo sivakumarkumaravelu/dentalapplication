@@ -14,6 +14,9 @@ import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.stream.Collectors;
 
+/**
+ * Dental appointment validator class helps in performing all the validations before creating a dental appointment
+ */
 @Component
 public class DentalAppointmentValidator {
     private static final Logger logger = LoggerFactory.getLogger(DentalAppointmentValidator.class);
@@ -21,6 +24,12 @@ public class DentalAppointmentValidator {
     @Value( "${dental.appointment.minduration}" )
     private int duration;
 
+    /**
+     * Validates the date interval by accepting start and end time
+     * @param startTime
+     * @param endTime
+     * @return
+     */
     public boolean validateDateInterval(long startTime, long endTime) {
         if (startTime <= 0 || endTime <= 0)
             return false;
@@ -33,6 +42,11 @@ public class DentalAppointmentValidator {
         return false;
     }
 
+    /**
+     * This method checks if the timestamp provided is a valid future time stamp.
+     * @param time
+     * @return
+     */
     public boolean isValidFutureTimeStamp(Timestamp time) {
         boolean isValid = true;
         try {
@@ -45,6 +59,14 @@ public class DentalAppointmentValidator {
         return isValid;
     }
 
+    /**
+     * This method accepts the from timestamp, to timestamp and minimum duration minutes and returns if the time between those
+     * time stamp is more than the limit.
+     * @param fromTs
+     * @param toTs
+     * @param minutes
+     * @return
+     */
     public boolean isValidTimeDuration(Timestamp fromTs, Timestamp toTs, int minutes) {
         LocalDateTime fromLocalTime = fromTs.toLocalDateTime();
         LocalDateTime toLocalTime = toTs.toLocalDateTime();
@@ -52,6 +74,12 @@ public class DentalAppointmentValidator {
         return duration.toMinutes() >= minutes ? true : false;
     }
 
+    /**
+     * This method checks if two appointments are conflicting with each other.
+     * @param reservedAppointment
+     * @param newAppointMent
+     * @return
+     */
     public boolean isConflictingAppointment(DentalAppointment reservedAppointment, DentalAppointment newAppointMent) {
         Timestamp fromAppointment1 = new Timestamp(reservedAppointment.getStartTime());
         Timestamp toAppointment1 = new Timestamp(reservedAppointment.getEndTime());
@@ -67,6 +95,13 @@ public class DentalAppointmentValidator {
     }
 
 
+    /**
+     * This appointment accepts an appointment and map of all appointments and checks if its a valid dental appointment.
+     * TODO We search here by the values in the map and check each appointment, a potential O(n), database would guarantee a O(logn).
+     * @param appointment
+     * @param allAppointments
+     * @return
+     */
     public boolean isValidDentistAppointment(DentalAppointment appointment, ConcurrentHashMap<Integer, DentalAppointment> allAppointments) {
         if (allAppointments == null || allAppointments.isEmpty()) {
             logger.info("DentalAppointmentValidator.isValidDentistAppointment(): No new appointments yet, creating first appointment");

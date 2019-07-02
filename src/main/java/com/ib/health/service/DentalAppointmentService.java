@@ -36,6 +36,7 @@ public class DentalAppointmentService {
         DentalAppointment newAppointment = null;
         if (validator.validateDateInterval(appointment.getStartTime(), appointment.getEndTime())) {
             if (validator.isValidDentistAppointment(appointment, map)) {
+                //TODO Appointments are in memory so leaving as such. If DAO layer is created need to move there.
                 int appointmentId = id.incrementAndGet();
                 newAppointment = new DentalAppointment(appointmentId, appointment.getDentist_id(), appointment.getPatient_id(), appointment.getStartTime(), appointment.getEndTime());
                 map.put(appointmentId, newAppointment);

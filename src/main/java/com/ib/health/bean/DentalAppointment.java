@@ -42,7 +42,7 @@ public class DentalAppointment {
 
     @Override
     public int hashCode() {
-        return dentist_id + Long.hashCode(startTime) + Long.hashCode(endTime);
+        return id + dentist_id + Long.hashCode(startTime) + Long.hashCode(endTime);
     }
 
     @Override
